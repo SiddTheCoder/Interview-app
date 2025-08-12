@@ -1,36 +1,65 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
-
-## Getting Started
-
-First, run the development server:
-
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
-
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+interview-app/
+│
+├── app/
+│   ├── layout.tsx
+│   ├── globals.css
+│   │
+│   ├── page.tsx                  # Landing page
+│   ├── login/page.tsx             # Auth pages
+│   ├── register/page.tsx
+│   │
+│   ├── dashboard/
+│   │   ├── page.tsx               # Main app after login
+│   │   ├── interview/
+│   │   │   ├── page.tsx           # Interview core UI
+│   │   │   ├── components/        # UI components for questions, mic, scores
+│   │   │   └── hooks/              # Custom hooks for interview flow
+│   │   │
+│   │   └── ai-playground/
+│   │       ├── page.tsx           # Test AI models (STT, TTS, QGen, scoring)
+│   │       └── components/
+│   │
+│   └── api/                       # API routes
+│       ├── auth/
+│       │   └── [...nextauth]/route.ts # NextAuth config
+│       │
+│       ├── stt/route.ts           # Speech-to-Text (Whisper)
+│       ├── stt-answer/route.ts    # STT for answers
+│       ├── tts/route.ts           # Text-to-Speech (Coqui)
+│       ├── questions/route.ts     # Topic detection + Q generation (Mistral)
+│       ├── score/route.ts         # Answer scoring
+│       └── pusher/auth/route.ts   # Pusher auth for private channels
+│
+├── components/                    # Global reusable components
+│   ├── ui/                         # ShadCN or other UI
+│   ├── Navbar.tsx
+│   ├── Footer.tsx
+│
+├── lib/
+│   ├── dbConnect.ts                # MongoDB connection
+│   ├── pusherServer.ts             # Pusher server instance
+│   ├── pusherClient.ts             # Pusher client instance
+│   ├── whisper.ts                  # Whisper wrapper
+│   ├── mistral.ts                  # Mistral wrapper
+│   ├── coqui.ts                    # Coqui TTS wrapper
+│   └── speechBrain.ts              # SpeechBrain wrapper
+│
+├── models/
+│   ├── User.ts
+│   ├── InterviewSession.ts
+│   ├── QuestionAnswer.ts
+│
+├── store/                          # Redux Toolkit
+│   ├── index.ts                    # Store config
+│   ├── slices/
+│   │   ├── userSlice.ts
+│   │   ├── interviewSlice.ts
+│   │   ├── aiPlaygroundSlice.ts
+│
+├── public/
+│   ├── audio/                      # Sample audios or TTS outputs
+│
+├── .env.local                      # Env vars (MongoDB URI, Pusher keys, etc.)
+├── package.json
+├── tsconfig.json
+└── README.md
