@@ -1,3 +1,50 @@
+ FLow of app 
+
+ 
+🎤 Starting an interview session
+[User Speech] 
+     ↓
+[Frontend: Speech → Text (STT)] 
+     ↓ (HTTP POST /api/start-interview)
+[Backend detects topic & generates questions] 
+     ↓ (pusherServer.trigger("questions_ready", firstQuestion))
+[Pusher Service]
+     ↓
+[Frontend subscribed to interview-{sessionId} channel receives "questions_ready"]
+
+
+🗣 Answering a question
+[User Speech Answer]
+     ↓
+[Frontend: STT → Text]
+     ↓ (HTTP POST /api/submit-answer)
+[Backend scores answer & stores in DB]
+     ↓ (pusherServer.trigger("score_ready", scoreData))
+[Pusher Service]
+     ↓
+[Frontend receives "score_ready" instantly & updates UI]
+
+
+➡ Moving to next question
+[Backend decides next question]
+     ↓ (pusherServer.trigger("next_question", questionData))
+[Pusher Service]
+     ↓
+[Frontend receives "next_question" instantly & starts TTS playback]
+
+
+🏁 Interview end
+[All questions done OR user stops session]
+     ↓ (Backend triggers "interview_end")
+[Pusher Service]
+     ↓
+[Frontend receives "interview_end" → Show summary screen]
+
+
+
+
+
+
 interview-app/
 │
 ├── app/
