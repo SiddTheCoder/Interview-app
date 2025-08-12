@@ -1,6 +1,8 @@
- FLow of app 
-
  
+ 
+ ## FLow of app 
+
+`
 🎤 Starting an interview session
 [User Speech] 
      ↓
@@ -39,6 +41,17 @@
 [Pusher Service]
      ↓
 [Frontend receives "interview_end" → Show summary screen]
+`
+
+
+# Interview App PUSHER events name for flow of Architecture
+💡 Key Pusher Roles
+topic_detect_request → signals background processing to detect topic and generate questions.
+questions_ready → sends first question when ready.
+answer_received (optional) → immediate confirmation that backend got the answer.
+score_ready → sends scoring results after evaluation.
+next_question → signals frontend to move to next question.
+interview_end → sends final interview results.
 
 
 
