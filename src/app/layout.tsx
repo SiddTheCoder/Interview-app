@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+import { ThemeProvider } from "@/context/ThemeProvider";
 import { PusherProvider } from "@/context/PusherProvider";
 
 const geistSans = Geist({
@@ -28,7 +29,15 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <PusherProvider>{children}</PusherProvider>
+        <PusherProvider>
+          <ThemeProvider
+            attribute="class"
+            defaultTheme="dark"
+            enableSystem={false} // since you want only white & dark
+          >
+            {children}
+          </ThemeProvider>
+        </PusherProvider>
       </body>
     </html>
   );
