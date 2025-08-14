@@ -8,6 +8,8 @@ import { Types } from "mongoose";
 import bcrypt from "bcryptjs";
 import User from "@/models/user/User";
 import { IUser } from "@/models/user/User";
+import type { Session } from "next-auth";
+import type { JWT } from "next-auth/jwt";
 
 export const authOptions: NextAuthOptions = {
   providers: [
@@ -110,6 +112,7 @@ export const authOptions: NextAuthOptions = {
         token.email = user.email;
         token.isVerified = user.isVerified;
         token.image = user.image || "";
+        token.fullName = user.fullName || "";
       }
       return token;
     },

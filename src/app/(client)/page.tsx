@@ -6,7 +6,7 @@ import LanderPage from "@/app/(client)/(lander)/page";
 
 export default function Home() {
   const { data: session, status } = useSession();
-
+  console.log("Session data:", session);
   if (status === "loading") {
     return <div>Loading...</div>;
   }
@@ -14,6 +14,6 @@ export default function Home() {
   if (status === "authenticated" && session?.user) {
     return <MainApp />;
   }
-
+  
   return <LanderPage />;
 }

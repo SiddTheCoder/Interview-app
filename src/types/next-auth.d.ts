@@ -7,9 +7,11 @@ declare module "next-auth" {
     email?: string;
     image?: string;
     isVerified?: boolean;
+    fullName?: string;
   }
   interface Session {
     user: {
+      fullName?:string,
       _id?: string;
       email?: string;
       isVerified?: boolean;
@@ -21,6 +23,7 @@ declare module "next-auth" {
 
 declare module "next-auth/jwt" {
   interface JWT {
+    fullName?: string;
     _id?: string;
     email?: string;
     isVerified?: boolean;
