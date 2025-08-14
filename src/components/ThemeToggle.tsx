@@ -8,16 +8,24 @@ export function ThemeToggle() {
   const { theme, setTheme } = useTheme();
 
   return (
-    <Button
-      variant="outline"
-      size="icon"
-      onClick={() => setTheme(theme === "light" ? "dark" : "light")}
-    >
-      {theme === "light" ? (
-        <Moon className="h-5 w-5" />
-      ) : (
+    <div className="flex items-center gap-2">
+      {/* Light theme button */}
+      <Button
+        variant={theme === "light" ? "outline" : "ghost"}
+        size="icon"
+        onClick={() => setTheme("light")}
+      >
         <Sun className="h-5 w-5" />
-      )}
-    </Button>
+      </Button>
+
+      {/* Dark theme button */}
+      <Button
+        variant={theme === "dark" ? "outline" : "ghost"}
+        size="icon"
+        onClick={() => setTheme("dark")}
+      >
+        <Moon className="h-5 w-5" />
+      </Button>
+    </div>
   );
 }

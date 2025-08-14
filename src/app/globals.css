@@ -48,7 +48,7 @@
 
   /* Light Theme — Neutral Black/White */
   --background: #ffffff;
-  --foreground: #0f172a; /* slate-900 text */
+  --foreground: #010307; /* slate-900 text */
 
   --card: #ffffff;
   --card-foreground: #0f172a;
@@ -99,7 +99,7 @@
   --gradient-start: #6366f1;
   --gradient-end: #7c3aed;
 
-  --background: #1e1b2e;
+  --background: #0b0916;
   --foreground: #e2e8f0;
 
   --card: #25213b;
@@ -150,4 +150,32 @@
   body {
     @apply bg-background text-foreground;
   }
+}
+
+.highlight-tilt {
+  position: relative;
+  z-index: 1;
+}
+
+.highlight-tilt::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgb(54, 131, 255), rgb(140, 174, 230));
+  transform: skewY(-3deg);
+  z-index: -1;
+  border-radius: 7px;
+  transition: all 0.3s ease;
+}
+
+.highlight-tilt:hover::before {
+  background: linear-gradient(135deg, rgb(140, 174, 230), rgb(54, 131, 255));
+  transform: skewY(-7deg);
+  border-radius: 10px;
+}
+
+.highlight-tilt:active::before {
+  background: linear-gradient(135deg, rgb(54, 131, 255), rgb(140, 174, 230));
+  transform: skewY(-3deg);
+  border-radius: 7px;
 }

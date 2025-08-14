@@ -9,30 +9,30 @@ export async function middleware(request: NextRequest) {
   const token = await getToken({ req: request, secret });
   const { pathname } = request.nextUrl;
 
-  // ✅ Public paths that don't require auth
-  const publicPaths = ["/"];
-  const authPages = ["/sign-in", "/sign-up", "/verify"];
 
-  // 1️⃣ If logged in & visiting sign-in/signup → go to dashboard
+  const publicPaths = ["/"];
+  const authPages = ["/signin", "/signup", "/verify"];
+
+  // If logged in & visiting sign-in/signup → go to dashboard
   if (token && authPages.some((path) => pathname.startsWith(path))) {
-    return NextResponse.redirect(new URL("/dashboard", request.url));
+    return NextResponse.redirect(new URL("/", request.url));
   }
 
-  // 3️⃣ Allow public pages without redirect
+  // Allow public pages without redirect
   if (publicPaths.some((path) => pathname.startsWith(path))) {
     return NextResponse.next();
   }
 
-  // 4️⃣ Default allow
+  // Default allow
   return NextResponse.next();
 }
 
-// ✅ Only run middleware on paths we care about
+// Only run middleware on paths we care about
 export const config = {
   matcher: [
     "/",
-    "/sign-in",
-    "/sign-up",
+    "/signin",
+    "/signup",
     "/dashboard/:path*",
     "/verify/:path*",
   ],

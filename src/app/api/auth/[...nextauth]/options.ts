@@ -61,9 +61,15 @@ export const authOptions: NextAuthOptions = {
   ],
   callbacks: {
     async signIn({ user, account, profile }) {
+      await dbConnect();
+
+       if (account?.provider === "credentials") {
+         // Credentials login passed authorize() — allow sign in
+         return true;
+       }
+
       if (!account || !profile) return false;
 
-      await dbConnect();
 
       if (account.provider !== "credentials") {
         let existingUser = await User.findOne<IUser>({ email: user.email });

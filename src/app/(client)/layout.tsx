@@ -3,6 +3,9 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "../globals.css";
 import { ThemeProvider } from "@/context/ThemeProvider";
 import { PusherProvider } from "@/context/PusherProvider";
+import SessionProvider from "@/context/AuthProvider"; // your AuthProvider wrapper
+import StateProvider from "@/store/StateProvider";
+import ThemedToaster from "@/context/ThemeToaster";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -21,23 +24,28 @@ export const metadata: Metadata = {
 
 export default function RootLayout({
   children,
-}: Readonly<{
+}: {
   children: React.ReactNode;
-}>) {
+}) {
   return (
     <html lang="en">
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <PusherProvider>
-          <ThemeProvider
-            attribute="class"
-            defaultTheme="dark"
-            enableSystem={false} // since you want only white & dark
-          >
-            {children}
-          </ThemeProvider>
-        </PusherProvider>
+        <SessionProvider>
+          {/* <StateProvider> */}
+          <PusherProvider>
+            <ThemeProvider
+              attribute="class"
+              defaultTheme="dark"
+              enableSystem={false} // only white & dark
+            >
+              <ThemedToaster />
+              {children}
+            </ThemeProvider>
+          </PusherProvider>
+          {/* </StateProvider> */}
+        </SessionProvider>
       </body>
     </html>
   );

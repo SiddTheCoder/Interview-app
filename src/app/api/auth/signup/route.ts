@@ -17,9 +17,9 @@ function generateOTP() {
 export const POST = withApiHandler(async (req: Request) => {
   await dbConnect();
   const verificationToken = generateOTP();
-  const { username, email, password, fullName } = await req.json();
-  if (!email || !password || !fullName) {
-    throw new ApiError("Email and password and fullName are required", 400);
+  const { username, email, password } = await req.json();
+  if (!email || !password || !username) {
+    throw new ApiError("Email and password and username are required", 400);
   }
   const existingUser = await User.findOne<IUser>({ email });
   if (existingUser) {
@@ -31,8 +31,7 @@ export const POST = withApiHandler(async (req: Request) => {
         {
           email: email,
           password: bcrypt.hashSync(password, 10),
-          fullName: fullName,
-          username: username ?? email.split("@")[0].toLowerCase(),
+          username: username,
           verificationToken: verificationToken,
           isVerified: false,
           verificationTokenExpiresAt: new Date(Date.now() + 3600000), // 1 hour
@@ -64,8 +63,7 @@ export const POST = withApiHandler(async (req: Request) => {
     const newUser = await User.create({
       email,
       password: hashedPassword,
-      fullName,
-      username: username ?? email.split("@")[0].toLowerCase(),
+      username: username,
       verificationToken,
       isVerified: false,
       verificationTokenExpiresAt: new Date(Date.now() + 3600000), // 1 hour

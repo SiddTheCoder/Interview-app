@@ -1,19 +1,19 @@
 "use client";
-import Image from "next/image";
-import { usePusherEvents } from "@/context/PusherProvider";
-import { useEffect } from "react";
-import { ThemeToggle } from "@/components/ThemeToggle";
-import { Button } from "@/components/ui/button";
+
+import { useSession, signIn } from "next-auth/react";
+import MainApp from "@/app/(client)/(app)/App";
+import LanderPage from "@/app/(client)/(lander)/page";
 
 export default function Home() {
-  const { events } = usePusherEvents();
+  const { data: session, status } = useSession();
 
-  console.log("events", events);
+  if (status === "loading") {
+    return <div>Loading...</div>;
+  }
 
-  return (
-    <div className="min-h-screen bg-background">
-      <Button>Hellow</Button>
-      <ThemeToggle />
-    </div>
-  );
+  if (status === "authenticated" && session?.user) {
+    return <MainApp />;
+  }
+
+  return <LanderPage />;
 }

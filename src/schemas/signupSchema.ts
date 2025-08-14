@@ -11,7 +11,6 @@ export const usernameValidationSchema = z
   
 export const signupValidationSchema = z.object({
   username: usernameValidationSchema.optional(),
-  fullName: z.string().min(2).max(100),
   email: z
     .string()
     .email({ message: "Invalid email address" })
