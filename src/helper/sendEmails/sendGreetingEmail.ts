@@ -1,18 +1,20 @@
 import resend from "@/lib/resend/resend";
-import { VerificationEmail } from "../../emails/VerificationEmail";
+import { GreetingEmail } from "@/../emails/GreetingEmail";
 import { ApiResponse } from "@/types/ApiResponse";
 
-export async function sendVerificationEmail(
+export async function sendGreetingEmail(
   email: string,
-  otp: string,
-  username: string
+  fullName: string,
+  message: string,
+  link?: string,
+  content?: string
 ): Promise<ApiResponse> {
   try {
     const { data, error } = await resend.emails.send({
-      from: "Interview App <no-reply@siddhantyadav.com.np>",
+      from: `${process.env.NEXT_PUBLIC_APP_NAME} <no-reply@siddhantyadav.com.np>`,
       to: email,
-      subject: "Email Verification",
-      react: VerificationEmail({ username, otp }),
+      subject: `Greeting from ${process.env.NEXT_PUBLIC_APP_NAME}`,
+      react: GreetingEmail({ fullName, message, link, content }),
     });
 
     if (error) {

@@ -9,6 +9,8 @@ export interface IUser extends Document {
   isVerified: boolean;
   provider?: string; // 'google', 'credentials', etc.
   createdAt: Date;
+  verificationToken?: string; // For email verification
+  verificationTokenExpiresAt?: Date; // For email verification
 }
 
 const UserSchema = new Schema<IUser>({
@@ -20,6 +22,8 @@ const UserSchema = new Schema<IUser>({
   provider: { type: String, default: "credentials" },
   createdAt: { type: Date, default: Date.now },
   isVerified: { type: Boolean, default: false },
+  verificationToken: { type: String },
+  verificationTokenExpiresAt: { type: Date },
 },{timestamps: true});
 
 export default (mongoose.models.User as mongoose.Model<IUser>) ||

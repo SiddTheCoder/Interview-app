@@ -1,13 +1,13 @@
 import * as React from "react";
 
 interface VerificationEmailProps {
-  username: string;
-  otp: string;
+  fullName: string;
+  verificationCode: string;
 }
 
 export async function VerificationEmail({
-  username,
-  otp,
+  fullName,
+  verificationCode,
 }: VerificationEmailProps) {
   return (
     <div
@@ -54,7 +54,7 @@ export async function VerificationEmail({
                   marginBottom: "16px",
                 }}
               >
-                Hello {username},
+                Hello {fullName.split(" ")[0]},
               </h2>
               <p
                 style={{
@@ -64,7 +64,7 @@ export async function VerificationEmail({
                 }}
               >
                 Use the following One-Time Password (OTP) to verify your
-                account. This code is valid for <strong>10 minutes</strong>.
+                account. This code is valid for <strong>1 hour</strong>.
               </p>
 
               <div
@@ -80,7 +80,7 @@ export async function VerificationEmail({
                   marginBottom: "24px",
                 }}
               >
-                {otp}
+                {verificationCode}
               </div>
 
               <p style={{ fontSize: "14px", color: "#777" }}>
@@ -98,7 +98,8 @@ export async function VerificationEmail({
                 color: "#aaa",
               }}
             >
-              © {new Date().getFullYear()} Your Company. All rights reserved.
+              © {new Date().getFullYear()} {process.env.NEXT_PUBLIC_APP_NAME}.
+              All rights reserved.
             </td>
           </tr>
         </tbody>
