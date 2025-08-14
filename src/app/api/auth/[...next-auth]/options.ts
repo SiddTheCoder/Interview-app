@@ -98,15 +98,34 @@ export const authOptions: NextAuthOptions = {
     },
 
     async jwt({ token, user }) {
-      // Custom logic for JWT
       if (user) {
-        token.id = user.id;
+        token._id = user.id;
+        token.username = user.username;
+        token.email = user.email;
+        token.isVerified = user.isVerified;
+        token.image = user.image || "";
       }
       return token;
     },
 
     async session({ session, token }) {
+      if (token) {
+        session.user._id = token._id;
+        session.user.username = token.username;
+        session.user.email = token.email;
+        session.user.isVerified = token.isVerified;
+        session.user.image = token.image;
+      }
       return session;
     },
   },
+  pages: {
+    signIn: "/auth/signin",
+    error: "/auth/error",
+    verifyRequest: "/auth/verify-request",
+  },
+  session: {
+    strategy: "jwt",
+  },
+  secret: process.env.NEXTAUTH_SECRET,
 };
