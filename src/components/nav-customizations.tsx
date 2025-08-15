@@ -43,7 +43,7 @@ export function NavCustomizations({
   const { theme, setTheme } = useTheme();
 
   return (
-    <SidebarGroup className="group-data-[collapsible=icon]:hidden">
+    <SidebarGroup className="group-data-[collapsible=icon]">
       <SidebarGroupLabel>Customizations</SidebarGroupLabel>
       <SidebarMenu>
         {/* Preferences start here */}

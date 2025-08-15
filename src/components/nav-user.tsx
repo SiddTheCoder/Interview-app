@@ -29,6 +29,7 @@ import {
 } from "@/components/ui/sidebar";
 import { useSession } from "next-auth/react";
 import { signOut } from "next-auth/react";
+import AlertDialogComponent from "./AlertDialogComponent";
 
 export function NavUser({
   onDropdownOpenChange,
@@ -109,9 +110,14 @@ export function NavUser({
               </DropdownMenuItem>
             </DropdownMenuGroup>
             <DropdownMenuSeparator />
-            <DropdownMenuItem>
-              <LogOut onClick={() => signOut({ callbackUrl: "/" })} />
-              Log out
+            <DropdownMenuItem onSelect={(e) => e.preventDefault()}>
+              <AlertDialogComponent
+                className="w-full"
+                cardTriggeringName="Sign Out"
+                title="Sign Out"
+                description="Are you sure you want to sign out?"
+                onConfirm={() => signOut({ callbackUrl: "/" })}
+              />
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
