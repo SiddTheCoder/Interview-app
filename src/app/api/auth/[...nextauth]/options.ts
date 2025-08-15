@@ -65,13 +65,12 @@ export const authOptions: NextAuthOptions = {
     async signIn({ user, account, profile }) {
       await dbConnect();
 
-       if (account?.provider === "credentials") {
-         // Credentials login passed authorize() — allow sign in
-         return true;
-       }
+      if (account?.provider === "credentials") {
+        // Credentials login passed authorize() — allow sign in
+        return true;
+      }
 
       if (!account || !profile) return false;
-
 
       if (account.provider !== "credentials") {
         let existingUser = await User.findOne<IUser>({ email: user.email });
@@ -105,7 +104,7 @@ export const authOptions: NextAuthOptions = {
       return true;
     },
 
-    async jwt({ token, user }) {
+    async jwt({ token, user, trigger, session }) {
       if (user) {
         token._id = user.id;
         token.username = user.username;
@@ -113,6 +112,10 @@ export const authOptions: NextAuthOptions = {
         token.isVerified = user.isVerified;
         token.image = user.image || "";
         token.fullName = user.fullName || "";
+      }
+      // ✅ Handle client-side `update()` calls--- when calling `update()` from useSession()
+      if (trigger === "update" && session?.fullName) {
+        token.fullName = session.fullName;
       }
       return token;
     },
@@ -124,6 +127,7 @@ export const authOptions: NextAuthOptions = {
         session.user.email = token.email;
         session.user.isVerified = token.isVerified;
         session.user.image = token.image;
+        session.user.fullName = token.fullName;
       }
       return session;
     },

@@ -6,9 +6,6 @@ import {
 
 export default function Page() {
   return (
-    <SidebarProvider>
-      <AppSidebar  />
-      {/* <SidebarTrigger className="-ml-1" /> */}
-    </SidebarProvider>
+    <h1>Dashboard</h1>
   );
 }

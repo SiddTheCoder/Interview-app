@@ -12,10 +12,11 @@ import {
   PieChart,
   Settings2,
   SquareTerminal,
+  Biohazard
 } from "lucide-react";
 
 import { NavMain } from "@/components/nav-main";
-import { NavProjects } from "@/components/nav-projects";
+import { NavCustomizations } from "@/components/nav-customizations"
 import { NavUser } from "@/components/nav-user";
 import { TeamSwitcher } from "@/components/team-switcher";
 import {
@@ -56,7 +57,7 @@ const data = {
       items: [
         {
           title: "History",
-          url: "#",
+          url: "/history",
         },
         {
           title: "Starred",
@@ -134,12 +135,7 @@ const data = {
       ],
     },
   ],
-  projects: [
-    {
-      name: "Design Engineering",
-      url: "#",
-      icon: Frame,
-    },
+  customizations: [
     {
       name: "Sales & Marketing",
       url: "#",
@@ -193,8 +189,8 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
       </SidebarHeader>
       <SidebarContent>
         <NavMain items={data.navMain} />
-        <NavProjects
-          projects={data.projects}
+        <NavCustomizations
+          projects={data.customizations}
           onDropdownOpenChange={setIsDropdownOpen}
         />
       </SidebarContent>

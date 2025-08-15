@@ -1,8 +1,7 @@
 "use client";
-
-import { useSession, signIn } from "next-auth/react";
-import MainApp from "@/app/(client)/(app)/App";
+import { useSession } from "next-auth/react";
 import LanderPage from "@/app/(client)/(lander)/page";
+import MainApp from "@/app/(client)/(app)/App";
 
 export default function Home() {
   const { data: session, status } = useSession();
@@ -14,6 +13,6 @@ export default function Home() {
   if (status === "authenticated" && session?.user) {
     return <MainApp />;
   }
-  
+
   return <LanderPage />;
 }

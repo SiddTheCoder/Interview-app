@@ -28,6 +28,7 @@ import {
   useSidebar,
 } from "@/components/ui/sidebar";
 import { useSession } from "next-auth/react";
+import { signOut } from "next-auth/react";
 
 export function NavUser({
   onDropdownOpenChange,
@@ -35,11 +36,6 @@ export function NavUser({
   onDropdownOpenChange?: (isOpen: boolean) => void;
 }) {
   const { isMobile } = useSidebar();
-  // const user = {
-  // name: "shadcn",
-  // email: "m@example.com",
-  // avatar: "/avatars/shadcn.jpg"
-  // };
 
   const { data: session, status } = useSession();
   const user = session?.user;
@@ -60,7 +56,9 @@ export function NavUser({
                 </AvatarFallback>
               </Avatar>
               <div className="grid flex-1 text-left text-sm leading-tight">
-                <span className="truncate font-medium">{user?.name}</span>
+                <span className="truncate font-medium">
+                  {user?.name || user?.fullName}
+                </span>
                 <span className="truncate text-xs">{user?.email}</span>
               </div>
               <ChevronsUpDown className="ml-auto size-4" />
@@ -81,7 +79,9 @@ export function NavUser({
                   </AvatarFallback>
                 </Avatar>
                 <div className="grid flex-1 text-left text-sm leading-tight">
-                  <span className="truncate font-medium">{user?.name}</span>
+                  <span className="truncate font-medium">
+                    {user?.name || user?.fullName}
+                  </span>
                   <span className="truncate text-xs">{user?.email}</span>
                 </div>
               </div>
@@ -110,7 +110,7 @@ export function NavUser({
             </DropdownMenuGroup>
             <DropdownMenuSeparator />
             <DropdownMenuItem>
-              <LogOut />
+              <LogOut onClick={() => signOut({ callbackUrl: "/" })} />
               Log out
             </DropdownMenuItem>
           </DropdownMenuContent>
