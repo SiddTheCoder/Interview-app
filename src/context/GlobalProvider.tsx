@@ -9,16 +9,18 @@ import ThemedToaster from "@/context/ThemeToaster";
 export default function Providers({ children }: { children: React.ReactNode }) {
   return (
     <SessionProvider>
-      <PusherProvider>
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="dark"
-          enableSystem={true}
-        >
-          <ThemedToaster />
-          {children}
-        </ThemeProvider>
-      </PusherProvider>
+      <StateProvider>
+        <PusherProvider>
+          <ThemeProvider
+            attribute="class"
+            defaultTheme="dark"
+            enableSystem={true}
+          >
+            <ThemedToaster />
+            {children}
+          </ThemeProvider>
+        </PusherProvider>
+      </StateProvider>
     </SessionProvider>
   );
 }

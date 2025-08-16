@@ -12,11 +12,11 @@ import {
   PieChart,
   Settings2,
   SquareTerminal,
-  Biohazard
+  Biohazard,
 } from "lucide-react";
 
 import { NavMain } from "@/components/nav-main";
-import { NavCustomizations } from "@/components/nav-customizations"
+import { NavCustomizations } from "@/components/nav-customizations";
 import { NavUser } from "@/components/nav-user";
 import { TeamSwitcher } from "@/components/team-switcher";
 import {
@@ -152,30 +152,31 @@ const data = {
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   const { state, toggleSidebar } = useSidebar();
   const [isDropdownOpen, setIsDropdownOpen] = React.useState(false);
-
+  const [isDoubleClick, setIsDoubleClick] = React.useState(false);
   const handleMouseEnter = () => {
-    if (state === "collapsed") {
+    if (state === "collapsed" && !isDoubleClick) {
       toggleSidebar(); // expand
     }
   };
 
   const handleMouseLeave = () => {
-    if (state === "expanded" && !isDropdownOpen) {
+    if (state === "expanded" && !isDropdownOpen && !isDoubleClick) {
       toggleSidebar();
     }
   };
 
   return (
     <Sidebar
+      onDoubleClick={() => setIsDoubleClick(!isDoubleClick)}
       collapsible="icon"
-      {...props}
+      {...props}  
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
       className={`transition-all duration-300 ease-in-out ${props.className} ${
         state !== "expanded"
           ? "h-[90vh]  top-8 fixed rounded-tr-2xl rounded-br-2xl"
           : "h-screen relative translate-y-0"
-      }`}
+      } ${isDoubleClick ? "cursor-crosshair" : ""}`}
       style={{
         position: state !== "expanded" ? "fixed" : "relative",
         left: 0,
@@ -195,7 +196,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         />
       </SidebarContent>
       <SidebarFooter>
-        <NavUser  onDropdownOpenChange={setIsDropdownOpen} />
+        <NavUser onDropdownOpenChange={setIsDropdownOpen} />
       </SidebarFooter>
 
       <SidebarRail />

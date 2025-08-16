@@ -40,7 +40,7 @@ export function NavUser({
 
   const { data: session, status } = useSession();
   const user = session?.user;
-  console.log("Session data:", session);
+  
   return (
     <SidebarMenu>
       <SidebarMenuItem>
@@ -51,9 +51,17 @@ export function NavUser({
               className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground"
             >
               <Avatar className="h-8 w-8 rounded-lg">
-                <AvatarImage src={user?.image} />
+                <AvatarImage
+                  src={user?.image ?? ""}
+                  alt={user?.name ?? "User Avatar"}
+                  onError={(e) => {
+                    // If broken URL, fallback will show
+                    (e.currentTarget as HTMLImageElement).style.display =
+                      "none";
+                  }}
+                />
                 <AvatarFallback className="rounded-lg">
-                  <User className="h-4 w-4" />
+                  {user?.name ? user.name[0] : "U"}
                 </AvatarFallback>
               </Avatar>
               <div className="grid flex-1 text-left text-sm leading-tight">
