@@ -2,6 +2,7 @@ import React from "react";
 import { toggleSuggestionBox } from "@/store/features/localState/localStateSlice";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { Button } from "../ui/button";
+import UserCamera from "./Interview/UserCamera";
 
 // 🔹 Centralized config for actions
 const suggestionActions = [
@@ -101,6 +102,7 @@ function SuggestionBox() {
   const dispatch = useAppDispatch();
 
   const handleToggle = () => {
+    setIsDoubleClick(false);
     dispatch(toggleSuggestionBox());
   };
 
@@ -194,16 +196,7 @@ function SuggestionBox() {
               </div>
 
               {/* Additional Features */}
-              <div className="mt-auto pt-4 border-t border-slate-700">
-                <div className="flex space-x-2">
-                  <button className="flex-1 py-2 px-3 bg-blue-600 hover:bg-blue-700 rounded text-white text-sm transition-colors duration-200">
-                    Focus Mode
-                  </button>
-                  <button className="flex-1 py-2 px-3 bg-green-600 hover:bg-green-700 rounded text-white text-sm transition-colors duration-200">
-                    Relax Mode
-                  </button>
-                </div>
-              </div>
+              <UserCamera />
             </div>
           ) : (
             // Collapsed Version
@@ -218,8 +211,6 @@ function SuggestionBox() {
                   {action.icon}
                 </Button>
               ))}
-
-              
             </div>
           )}
         </div>

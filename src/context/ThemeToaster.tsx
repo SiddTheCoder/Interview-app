@@ -2,23 +2,28 @@
 
 import { Toaster } from "sonner";
 import { useTheme } from "next-themes";
+// import "./toast-override.css"; // add custom animations
 
 export default function ThemedToaster() {
   const { theme } = useTheme();
 
   return (
     <Toaster
-      position="top-right"
+      position="bottom-right"
       toastOptions={{
+        classNames: {
+          toast: "slide-in-right", // apply custom animation
+        },
         style:
           theme === "light"
             ? {
-                background: "#ffffff", // white
-                color: "#111111", // black text
+                background: "#ffffff",
+                color: "#111111",
               }
             : {
-                background: "#111111", // dark green
-                color: "#ffffff", // mint text
+                border: "none",
+                background: "#111111",
+                color: "#ffffff",
               },
       }}
     />

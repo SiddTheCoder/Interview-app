@@ -24,7 +24,11 @@ function SetUserFullNameCard() {
       // Force session refresh with new fullName
       await update({ fullName });
     } catch (error) {
-      toast.error(error.response.data.message);
+      if (axios.isAxiosError(error) && error.response?.data?.message) {
+        toast.error(error.response.data.message);
+      } else {
+        toast.error("An unexpected error occurred.");
+      }
     } finally {
       setIsSubmitting(false);
     }
